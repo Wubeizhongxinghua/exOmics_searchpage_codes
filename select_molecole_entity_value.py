@@ -31,4 +31,5 @@ def select_molecule_entity_value(dataset, feature, specimen, conn):
     """
 
     tables = pd.read_sql_query(sql_molecule_entity_value,conn)
-    return tables['NT'], tables['Entity'], tables['Value_type']
+    return tables['NT'][0], tables['Entity'][0], tables['Value_type'][0]
+# TODO 没有考虑多个映射的情况

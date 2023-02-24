@@ -40,6 +40,7 @@ query_sql = f"""
 
 #获得表格，可以直接在网页中展示
 table = pd.read_sql_query(query_sql, conn)
+table.iloc[:,1:] = table.iloc[:,1:].astype('float')
 table = table.set_index('feature') #feature列设为index
 
 #作图
@@ -66,4 +67,3 @@ ax.set_ylabel(f'{value.upper()}')
 ax.set_title(f'{value.upper()} of {gene.upper()} in dataset {dataset.upper()} in specimen {specimen.upper()} of disease {disease.upper()}')
 ax.set_xticks(x + width_all/2, list(table.index),rotation=90)
 ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
-
