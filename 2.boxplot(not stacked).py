@@ -95,3 +95,4 @@ cmap = cm.ScalarMappable(cmap=mpl.cm.cool)
 test_mean = [np.mean(x) for x in data]
 for patch, color in zip(plotfig['boxes'], cmap.to_rgba(test_mean)):
     patch.set_facecolor(color)
+fig.tight_layout()

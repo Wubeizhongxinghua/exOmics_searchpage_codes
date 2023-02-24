@@ -6,7 +6,7 @@ The site of web page prototype is: https://cc.mockplus.cn/s/7QMjg54avJO
 
 *The following contents are updating records and todos.*
 
-1. table & batplot
+1. Table & barplot
 
 - [X] Code
 - [X] Prototype

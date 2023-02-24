@@ -50,7 +50,7 @@ y = table.shape[1]
 fig = Figure()
 ax = fig.subplots()
 
-width_all = 0.25
+width_all = 0.7
 width = width_all/y  # the width of the bars
 multiplier = 0
 cmap = cm.ScalarMappable(cmap=mpl.cm.cool)
