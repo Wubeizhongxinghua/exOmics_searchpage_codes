@@ -1,7 +1,3 @@
-#! 需要注意的是, boxplot在设计中有2种形式, 即一般的boxplot和堆叠的boxplot。具体设计在「数据展示形式」ppt中有。
-
-#* 这里的代码是非堆叠的batplot，适用于Alt.polyadenylation, BS-seq, DIP-seq, Fragment size, NO, Expression（第一类数据）
-
 import pandas as pd
 from matplotlib.figure import Figure
 import pymysql
