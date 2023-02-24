@@ -46,7 +46,7 @@ sql_disease = f"""
 			SUBSTRING_INDEX(TABLE_NAME,'-',-1) AS Value_type
 		FROM information_schema.`TABLES`
 		WHERE table_schema='exOmics'
-    		AND (
+            AND (
                 TABLE_NAME LIKE '%gse%'
 				OR TABLE_NAME LIKE '%prjeb%'
 				OR TABLE_NAME LIKE '%prjna%'
@@ -72,7 +72,8 @@ for disease in diseases['Disease_condition']:
 			AND g.ensembl_gene_id LIKE '%{gene}%'
 	"""
 	temp = pd.read_sql_query(query_sql, conn) #选择某个疾病类型下的某个基因的所有样本的值，应当是1*n的矩阵
-	diseases_data[disease.upper()] = list(temp.iloc[0,1:])
+	diseases_data[disease.upper()] = list(temp.iloc[0,1:].astype('float'))
+
 
 #作图
 #将获得一个多行多列的表，每一行代表一个entity，每一列代表一个样本或一个疾病类型（当disease是mean时）。因此做barplot选择做dodged barplot (即grouped bat chart)。
