@@ -10,7 +10,7 @@ The site of web page prototype is: https://cc.mockplus.cn/s/7QMjg54avJO
 
 - [X] Code
 - [X] Prototype
-- [ ] Tables of projection of sites of SNP, Editing to genes.
+- [ ] Tables of projection of sites of SNP, Editing to genes
 
 2. Boxplot
 
@@ -20,4 +20,10 @@ The site of web page prototype is: https://cc.mockplus.cn/s/7QMjg54avJO
 
 3. Heatmap
 
-- [ ] To do
+- [X] Code
+- [X] Prototype
+- [ ] Tables of projection of sites of SNP, Editing to genes
+
+4. Comparison box plot
+
+- [ ] TODO
