@@ -5,7 +5,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 import matplotlib as mpl
-from select_molecole_entity_value import select_molecule_entity_value
 
 #建立连接
 conn = pymysql.connect(

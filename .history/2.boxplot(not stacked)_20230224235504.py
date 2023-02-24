@@ -1,6 +1,6 @@
-
 #! 需要注意的是, boxplot在设计中有2种形式, 即一般的boxplot和堆叠的boxplot。具体设计在「数据展示形式」ppt中有。
-#* 这里的代码是堆叠的batplot，适用于Alt.promoter, Chimeric RNA, Editing, Splicing（第二类数据）
+
+#* 这里的代码是非堆叠的batplot，适用于Alt.polyadenylation, BS-seq, DIP-seq, Fragment size, NO, Expression（第一类数据）
 
 import pandas as pd
 from matplotlib.figure import Figure
@@ -9,8 +9,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 import matplotlib as mpl
-from copy import copy
-from select_molecole_entity_value import select_molecule_entity_value
+
 
 #建立连接
 conn = pymysql.connect(
@@ -22,15 +21,15 @@ conn = pymysql.connect(
 )
 
 #设定要查询的数据类型和基因
-gene = 'ENSG00000000457' #基因主页所对应的基因
-feature = 'altp' #此处值是范例，实际上需要根据网页决定
-dataset = 'gse68086' #此处值是范例，实际上需要根据网页决定
-specimen = 'tep' #此处值是范例，实际上需要根据网页决定
+gene = 'ENSG00000001629' #基因主页所对应的基因
+feature = 'expr' #此处值是范例，实际上需要根据网页决定
+dataset = 'gse133684' #此处值是范例，实际上需要根据网页决定
+specimen = 'ev' #此处值是范例，实际上需要根据网页决定
 
 #以下变量由上述选择自动决定，因为具有关联性
 # molecule = 'cfrna'
-# entity = 'entity'
-# value = 'count'
+# entity = 'gene'
+# value = 'tpm'
 molecule, entity, value = select_molecule_entity_value(dataset, feature, specimen, conn)
 
 
@@ -47,7 +46,7 @@ sql_disease = f"""
 			SUBSTRING_INDEX(TABLE_NAME,'-',-1) AS Value_type
 		FROM information_schema.`TABLES`
 		WHERE table_schema='exOmics'
-			AND (
+    		AND (
                 TABLE_NAME LIKE '%gse%'
 				OR TABLE_NAME LIKE '%prjeb%'
 				OR TABLE_NAME LIKE '%prjna%'
@@ -73,43 +72,25 @@ for disease in diseases['Disease_condition']:
 			AND g.ensembl_gene_id LIKE '%{gene}%'
 	"""
 	temp = pd.read_sql_query(query_sql, conn) #选择某个疾病类型下的某个基因的所有样本的值，应当是1*n的矩阵
-	fentities = list(temp['feature'])
-	for fentity in fentities:
-		if fentity not in diseases_data.keys():
-			diseases_data[fentity] = {}
-		diseases_data[fentity][disease.upper()] = list(temp[temp['feature']==fentity].iloc[0,1:].astype('float'))
-
+	diseases_data[disease.upper()] = list(temp.iloc[0,1:])
 
 #作图
 #将获得一个多行多列的表，每一行代表一个entity，每一列代表一个样本或一个疾病类型（当disease是mean时）。因此做barplot选择做dodged barplot (即grouped bat chart)。
-features, out_data = diseases_data.keys(), diseases_data.values()
+
+
+
+labels, data = diseases_data.keys(), diseases_data.values() #Drawing data
 fig = Figure()
 ax = fig.subplots()
-cmap = cm.get_cmap('viridis',len(features))
-colors = cmap(np.linspace(0, 1, len(features)))
-colors[:,-1] = 0.5
-elements = []
-for i in range(len(features)): #对于每个entity
-    feature = list(features)[i]
-    labels, data = diseases_data[feature].keys(), diseases_data[feature].values()
-    color = colors[i,:]
-    color_notrans = copy(color)
-    color_notrans[-1] = 1
-    elements.append(ax.boxplot(data,
-        notch=True,
-        patch_artist=True,
-        labels=labels,
-        boxprops={'facecolor':color,'edgecolor':color_notrans},
-        flierprops={'marker':'.', 'markerfacecolor': color, 'markeredgecolor': color_notrans},
-        medianprops = {'color': color_notrans},
-        capprops={'color':color_notrans},
-        whiskerprops={'color':color_notrans}))
-    ax.set_xlabel('Disease Conditions')
-    ax.set_ylabel(f'{value.upper()}')
-colors_notrans = copy(colors)
-colors_notrans[:,-1] = 1
-ax.legend([element["boxes"][0] for element in elements],
-    [list(features)[idx] for idx in range(len(features))],
-    bbox_to_anchor=(1, 0.5),
-    loc='best'
-)
+
+#Boxplot
+plotfig = ax.boxplot(data,notch=True,patch_artist=True,labels=labels)
+
+ax.set_xlabel('Disease Conditions')
+ax.set_ylabel(f'{value.upper()}')
+
+#Fill color
+cmap = cm.ScalarMappable(cmap=mpl.cm.cool)
+test_mean = [np.mean(x) for x in data]
+for patch, color in zip(plotfig['boxes'], cmap.to_rgba(test_mean)):
+    patch.set_facecolor(color)

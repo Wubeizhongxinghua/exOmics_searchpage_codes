@@ -5,7 +5,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 import matplotlib as mpl
-from select_molecole_entity_value import select_molecule_entity_value
 
 #建立连接
 conn = pymysql.connect(
@@ -27,8 +26,6 @@ specimen = 'tep' #此处值是范例，实际上需要根据网页决定
 # molecule = 'cfrna'
 # entity = 'entity'
 # value = 'count'
-molecule, entity, value = select_molecule_entity_value(dataset, feature, specimen, conn)
-
 
 #查询语句
 query_sql = f"""
