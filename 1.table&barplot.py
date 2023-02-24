@@ -35,7 +35,7 @@ query_sql = f"""
     SELECT c.*
     FROM `{molecule}-{feature}-{dataset}-{entity}-{disease}-{specimen}-{value}` c, gene_index g
     WHERE c.feature LIKE CONCAT('%',g.ensembl_gene_id,'%')
-        AND g.ensembl_gene_id LIKE CONCAT('%',{gene},'%')
+        AND g.ensembl_gene_id LIKE '%{gene}%'
 """
 
 #获得表格，可以直接在网页中展示
