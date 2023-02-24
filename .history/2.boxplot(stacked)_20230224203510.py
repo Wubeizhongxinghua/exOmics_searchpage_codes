@@ -44,7 +44,7 @@ sql_disease = f"""
 			SUBSTRING_INDEX(TABLE_NAME,'-',-1) AS Value_type
 		FROM information_schema.`TABLES`
 		WHERE table_schema='exOmics'
-			AND (
+	AND (
                 TABLE_NAME LIKE '%gse%'
 				OR TABLE_NAME LIKE '%prjeb%'
 				OR TABLE_NAME LIKE '%prjna%'

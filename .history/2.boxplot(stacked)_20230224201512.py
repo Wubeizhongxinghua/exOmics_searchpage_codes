@@ -44,7 +44,7 @@ sql_disease = f"""
 			SUBSTRING_INDEX(TABLE_NAME,'-',-1) AS Value_type
 		FROM information_schema.`TABLES`
 		WHERE table_schema='exOmics'
-			AND (
+    		AND (
                 TABLE_NAME LIKE '%gse%'
 				OR TABLE_NAME LIKE '%prjeb%'
 				OR TABLE_NAME LIKE '%prjna%'
@@ -85,28 +85,22 @@ ax = fig.subplots()
 cmap = cm.get_cmap('viridis',len(features))
 colors = cmap(np.linspace(0, 1, len(features)))
 colors[:,-1] = 0.5
-elements = []
 for i in range(len(features)): #对于每个entity
     feature = list(features)[i]
     labels, data = diseases_data[feature].keys(), diseases_data[feature].values()
     color = colors[i,:]
     color_notrans = copy(color)
     color_notrans[-1] = 1
-    elements.append(ax.boxplot(data,
-        notch=True,
-        patch_artist=True,
-        labels=labels,
-        boxprops={'facecolor':color,'edgecolor':color_notrans},
-        flierprops={'marker':'.', 'markerfacecolor': color, 'markeredgecolor': color_notrans},
-        medianprops = {'color': color_notrans},
-        capprops={'color':color_notrans},
-        whiskerprops={'color':color_notrans}))
+    plotfig = ax.boxplot(data,
+		notch=True,
+		patch_artist=True,
+		labels=labels,
+		boxprops={'facecolor':color,'edgecolor':color_notrans},
+		flierprops={'marker':'.', 'markerfacecolor': color, 'markeredgecolor': color_notrans},
+		medianprops = {'color': color_notrans},
+		capprops={'color':color_notrans},
+		whiskerprops={'color':color_notrans})
     ax.set_xlabel('Disease Conditions')
     ax.set_ylabel(f'{value.upper()}')
-colors_notrans = copy(colors)
-colors_notrans[:,-1] = 1
-ax.legend([element["boxes"][0] for element in elements],
-    [list(features)[idx] for idx in range(len(features))],
-    bbox_to_anchor=(1, 0.5),
-    loc='best'
-)
+ax.legend()
+    #legend
