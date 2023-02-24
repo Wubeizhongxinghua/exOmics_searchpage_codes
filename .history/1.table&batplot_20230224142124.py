@@ -55,7 +55,9 @@ for coli in range(table.shape[1]): #每一列
     ax.bar_label(rects, padding=3)
     multiplier += 1
 
-ax.set_ylabel(f'{value.upper()}')
-ax.set_title(f'{value.upper()} of {gene.upper()} in dataset {dataset.upper()} in specimen {specimen.upper()} of disease {disease.upper()}')
+ax.set_ylabel(f'{value}')
+ax.set_title(f'{value} of {gene} in dataset {dataset} in specimen {specimen} of disease {disease}')
 ax.set_xticks(x + width, list(table.index))
 ax.legend(loc='upper left', ncols=table.shape[1])
+
+plt.show()

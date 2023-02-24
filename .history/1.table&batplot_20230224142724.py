@@ -59,3 +59,5 @@ ax.set_ylabel(f'{value.upper()}')
 ax.set_title(f'{value.upper()} of {gene.upper()} in dataset {dataset.upper()} in specimen {specimen.upper()} of disease {disease.upper()}')
 ax.set_xticks(x + width, list(table.index))
 ax.legend(loc='upper left', ncols=table.shape[1])
+
+plt.show()
