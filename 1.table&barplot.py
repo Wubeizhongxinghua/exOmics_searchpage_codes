@@ -67,3 +67,4 @@ ax.set_ylabel(f'{value.upper()}')
 ax.set_title(f'{value.upper()} of {gene.upper()} in dataset {dataset.upper()} in specimen {specimen.upper()} of disease {disease.upper()}')
 ax.set_xticks(x + width_all/2, list(table.index),rotation=90)
 ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
+# return fig, jsondataframe
