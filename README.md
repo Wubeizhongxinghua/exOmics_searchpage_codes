@@ -10,7 +10,7 @@ The site of web page prototype is: https://cc.mockplus.cn/s/7QMjg54avJO
 
 - [X] Code
 - [X] Prototype
-- [ ] Tables of projection of sites of SNP, Editing to genes
+- [X] Tables of projection of sites of SNP, Editing to genes
 
 - Use function:
   ```python
@@ -18,7 +18,7 @@ The site of web page prototype is: https://cc.mockplus.cn/s/7QMjg54avJO
   import pandas as pd
   import pymysql
   import ...
-  
+
   conn = ...
   fig, data_json = tableBar(gene, feature, dataset, disease, specimen, conn)
   ```
@@ -36,7 +36,7 @@ The site of web page prototype is: https://cc.mockplus.cn/s/7QMjg54avJO
   import pandas as pd
   import pymysql
   import ...
-  
+
   conn = ...
   fig_stack = stackBox(gene, feature, dataset, specimen, conn)
   fig_nonstack = nonStackBox(gene, feature, dataset, specimen, conn)
@@ -46,7 +46,7 @@ The site of web page prototype is: https://cc.mockplus.cn/s/7QMjg54avJO
 
 - [X] Code
 - [X] Prototype
-- [ ] Tables of projection of sites of SNP, Editing to genes
+- [X] Tables of projection of sites of SNP, Editing to genes
 
 + Use function:
   ```python
@@ -54,7 +54,7 @@ The site of web page prototype is: https://cc.mockplus.cn/s/7QMjg54avJO
   import pandas as pd
   import pymysql
   import ...
-  
+
   conn = ...
   fig = heatMap(gene, feature, dataset, disease, specimen, conn)
   ```
