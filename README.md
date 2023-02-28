@@ -18,7 +18,7 @@ The site of web page prototype is: https://cc.mockplus.cn/s/7QMjg54avJO
   import pandas as pd
   import pymysql
   import ...
-
+  
   conn = ...
   fig, data_json = tableBar(gene, feature, dataset, disease, specimen, conn)
   ```
@@ -36,7 +36,7 @@ The site of web page prototype is: https://cc.mockplus.cn/s/7QMjg54avJO
   import pandas as pd
   import pymysql
   import ...
-
+  
   conn = ...
   fig_stack = stackBox(gene, feature, dataset, specimen, conn)
   fig_nonstack = nonStackBox(gene, feature, dataset, specimen, conn)
@@ -54,7 +54,7 @@ The site of web page prototype is: https://cc.mockplus.cn/s/7QMjg54avJO
   import pandas as pd
   import pymysql
   import ...
-
+  
   conn = ...
   fig = heatMap(gene, feature, dataset, disease, specimen, conn)
   ```
@@ -62,3 +62,9 @@ The site of web page prototype is: https://cc.mockplus.cn/s/7QMjg54avJO
 4. Comparison box plot
 
 - [ ] TODO
+
+## About repo
+
+- If you need to run a script locally, put it in the `/scripts/` directory. Won't be updated to the online repo.
+- You can refer to `/scripts/example.py` for writing new scripts, or you can write any new scripts from scratch. However, do not modify `/scripts/example.py` directly.
+- Do not reveal any database secrets in a file, if the file is seen by git.
