@@ -9,6 +9,13 @@ The site of web page prototype is: https://cc.mockplus.cn/s/7QMjg54avJO
 
 *The following contents are updating records and todos.*
 
+
+0. Structure
+
+- [ ] Functionize: search for diseases according to known fields.
+- [ ] Tablenization of `select_molecule_entity_value()`
+
+
 1. Table & barplot
 
 - [X] Code
