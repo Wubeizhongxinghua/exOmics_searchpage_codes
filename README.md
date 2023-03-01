@@ -76,6 +76,8 @@ The site of web page prototype is: https://cc.mockplus.cn/s/7QMjg54avJO
 
 + Use function:
 
+*If possible, please use branch `dev` of module `statannotations` (https://github.com/trevismd/statannotations.git) instead of `master`.*
+
 ```python
 import pandas as pd
 from matplotlib.figure import Figure
