@@ -59,7 +59,7 @@ The site of web page prototype is: https://cc.mockplus.cn/s/7QMjg54avJO
   import ...
 
   conn = ...
-  fig = heatMap(gene, feature, dataset, disease, specimen, entity, conn)
+  fig = heatMap(gene, feature, dataset, specimen, entity, conn)
   ```
 
 4. Comparison box plot
@@ -84,7 +84,7 @@ import seaborn as sns
 from comparison import comparison
 
 conn = ...
-fig = comparison(gene, feature, dataset, disease, specimen, entity, conn)
+fig = comparison(gene, feature, dataset, specimen, entity, conn)
 ```
 
 ## About repo
