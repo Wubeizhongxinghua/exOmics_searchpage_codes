@@ -4,19 +4,20 @@ import matplotlib.pyplot as plt
 from .select_molecole_entity_value import select_molecule_entity_value
 
 
-def heat_map(gene: str, feature: str, dataset: str, specimen: str, conn) -> Figure:
+def heat_map(gene: str, feature: str, dataset: str, specimen: str, entity: str, conn) -> Figure:
 	"""
 	gene = 'ENSG00000000457' #基因主页所对应的基因 \\
 	feature = 'altp' #此处值是范例，实际上需要根据网页决定 \\
 	dataset = 'gse68086' #此处值是范例，实际上需要根据网页决定 \\
-	specimen = 'tep' #此处值是范例，实际上需要根据网页决定
+	specimen = 'tep' #此处值是范例，实际上需要根据网页决定 \\
+	entity = 'entity'
 	"""
 	with conn:
 		#以下变量由上述选择自动决定，因为具有关联性
 		# molecule = 'cfrna'
 		# entity = 'entity'
 		# value = 'count'
-		molecule, entity, value = select_molecule_entity_value(dataset, feature, specimen, conn)
+		molecule, value = select_molecule_entity_value(dataset, feature, specimen, entity, conn)
 
 
 		#根据以上条件查询所有可能的疾病类型

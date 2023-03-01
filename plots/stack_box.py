@@ -10,12 +10,13 @@ from copy import copy
 from .select_molecole_entity_value import select_molecule_entity_value
 
 
-def stack_box(gene: str, feature: str, dataset: str, specimen: str, conn) -> Figure:
+def stack_box(gene: str, feature: str, dataset: str, specimen: str, entity: str, conn) -> Figure:
 	"""
 	gene = 'ENSG00000000457' #基因主页所对应的基因 \\
 	feature = 'altp' #此处值是范例，实际上需要根据网页决定 \\
 	dataset = 'gse68086' #此处值是范例，实际上需要根据网页决定 \\
-	specimen = 'tep' #此处值是范例，实际上需要根据网页决定
+	specimen = 'tep' #此处值是范例，实际上需要根据网页决定\\
+	entity = 'entity' \\
 	conn:建立的mysql连接
 	"""
 
@@ -24,7 +25,7 @@ def stack_box(gene: str, feature: str, dataset: str, specimen: str, conn) -> Fig
 	# entity = 'entity'
 	# value = 'count'
 	with conn:
-		molecule, entity, value = select_molecule_entity_value(dataset, feature, specimen, conn)
+		molecule, value = select_molecule_entity_value(dataset, feature, specimen, entity, conn)
 
 		#根据以上条件查询所有可能的疾病类型
 		sql_disease = f"""

@@ -1,5 +1,8 @@
 # exOmics Searchpage Codes
 
+***!! 注意：entity不再作为函数 `select_molecule_entity_value`的output，而是作为input。在网页中进行选择。***
+
+
 **This repo. is for restoring and updating code used for exOmics search page.**
 
 The site of web page prototype is: https://cc.mockplus.cn/s/7QMjg54avJO
@@ -20,7 +23,7 @@ The site of web page prototype is: https://cc.mockplus.cn/s/7QMjg54avJO
   import ...
 
   conn = ...
-  fig, data_json = tableBar(gene, feature, dataset, disease, specimen, conn)
+  fig, data_json = tableBar(gene, feature, dataset, disease, specimen, entity, conn)
   ```
 
 2. Boxplot
@@ -38,8 +41,8 @@ The site of web page prototype is: https://cc.mockplus.cn/s/7QMjg54avJO
   import ...
 
   conn = ...
-  fig_stack = stackBox(gene, feature, dataset, specimen, conn)
-  fig_nonstack = nonStackBox(gene, feature, dataset, specimen, conn)
+  fig_stack = stackBox(gene, feature, dataset, specimen, entity, conn)
+  fig_nonstack = nonStackBox(gene, feature, dataset, specimen, entity, conn)
   ```
 
 3. Heatmap
@@ -56,12 +59,33 @@ The site of web page prototype is: https://cc.mockplus.cn/s/7QMjg54avJO
   import ...
 
   conn = ...
-  fig = heatMap(gene, feature, dataset, disease, specimen, conn)
+  fig = heatMap(gene, feature, dataset, disease, specimen, entity, conn)
   ```
 
 4. Comparison box plot
 
-- [ ] TODO
+- [X] Code
+- [ ] Prototype
+
++ Use function:
+
+```python
+import pandas as pd
+from matplotlib.figure import Figure
+import numpy as np
+import matplotlib.cm as cm
+from copy import copy
+from plots.select_molecole_entity_value import select_molecule_entity_value
+from statannotations.Annotator import Annotator
+import matplotlib as mpl
+import itertools
+import matplotlib.pyplot as plt
+import seaborn as sns
+from comparison import comparison
+
+conn = ...
+fig = comparison(gene, feature, dataset, disease, specimen, entity, conn)
+```
 
 ## About repo
 

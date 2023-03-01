@@ -10,19 +10,20 @@ import matplotlib.cm as cm
 import matplotlib as mpl
 from .select_molecole_entity_value import select_molecule_entity_value
 
-def non_stack_box(gene: str, feature: str, dataset: str, specimen: str, conn) -> Figure:
+def non_stack_box(gene: str, feature: str, dataset: str, specimen: str, entity: str, conn) -> Figure:
 	"""
 	gene = 'ENSG00000001629' #基因主页所对应的基因 \\
 	feature = 'expr' #此处值是范例，实际上需要根据网页决定 \\
 	dataset = 'gse133684' #此处值是范例，实际上需要根据网页决定 \\
-	specimen = 'ev' #此处值是范例，实际上需要根据网页决定
+	specimen = 'ev' #此处值是范例，实际上需要根据网页决定 \\
+	entity = 'gene'
 	"""
 	with conn:
 		#以下变量由上述选择自动决定，因为具有关联性
 		# molecule = 'cfrna'
 		# entity = 'gene'
 		# value = 'tpm'
-		molecule, entity, value = select_molecule_entity_value(dataset, feature, specimen, conn)
+		molecule, value = select_molecule_entity_value(dataset, feature, specimen, entity, conn)
 
 
 		#根据以上条件查询所有可能的疾病类型
@@ -64,7 +65,10 @@ def non_stack_box(gene: str, feature: str, dataset: str, specimen: str, conn) ->
 					AND g.ensembl_gene_id LIKE '%{gene}%'
 			"""
 			temp = pd.read_sql_query(query_sql, conn) #选择某个疾病类型下的某个基因的所有样本的值，应当是1*n的矩阵
-			diseases_data[disease.upper()] = list(temp.iloc[0,1:].astype('float'))
+			try:
+				diseases_data[disease.upper()] = list(temp.iloc[0,1:].astype('float'))
+			except IndexError:
+				diseases_data[disease.upper()] = np.zeros(temp.shape[1],dtype='float')
 
 
 		#作图

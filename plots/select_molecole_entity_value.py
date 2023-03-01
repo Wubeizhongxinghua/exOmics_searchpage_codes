@@ -1,6 +1,6 @@
 import pandas as pd
 
-def select_molecule_entity_value(dataset, feature, specimen, conn):
+def select_molecule_entity_value(dataset, feature, specimen, entity, conn):
     sql_molecule_entity_value = f"""
         SELECT DISTINCT ori.NT, ori.Entity, ori.Value_type
         FROM (
@@ -26,10 +26,11 @@ def select_molecule_entity_value(dataset, feature, specimen, conn):
         WHERE Dataset LIKE '%{dataset}%'
             AND Omics LIKE '%{feature}%'
             AND Specimen LIKE '%{specimen}%'
+            AND Entity LIKE '%{entity}%'
             AND Disease_condition NOT LIKE '%mean%'
     """
 
     tables = pd.read_sql_query(sql_molecule_entity_value,conn)
-    return tables['NT'][0], tables['Entity'][0], tables['Value_type'][0]
+    return tables['NT'][0], tables['Value_type'][0]
 # TODO 没有考虑多个映射的情况
 # TODO 改成表格的格式，不再每次都查询了

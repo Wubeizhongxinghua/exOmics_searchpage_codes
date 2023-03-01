@@ -6,20 +6,21 @@ import matplotlib as mpl
 from .select_molecole_entity_value import select_molecule_entity_value
 
 
-def table_bar(gene: str, feature: str, dataset: str, disease: str, specimen: str, conn):
+def table_bar(gene: str, feature: str, dataset: str, disease: str, specimen: str, entity: str, conn):
     """
     gene = 'ENSG00000000457' #基因主页所对应的基因 \\
     feature = 'altp' #此处值是范例，实际上需要根据网页决定 \\
     dataset = 'gse68086' #此处值是范例，实际上需要根据网页决定 \\
     disease = 'lihc' #此处值是范例，实际上需要根据网页决定 \\
-    specimen = 'tep' #此处值是范例，实际上需要根据网页决定
+    specimen = 'tep' #此处值是范例，实际上需要根据网页决定 \\
+    entity = ''
     """
     #以下变量由上述选择自动决定，因为具有关联性
     # molecule = 'cfrna'
     # entity = 'entity'
     # value = 'count'
     with conn:
-        molecule, entity, value = select_molecule_entity_value(dataset, feature, specimen, conn)
+        molecule, value = select_molecule_entity_value(dataset, feature, specimen, entity, conn)
 
         #查询语句
         query_sql = f"""
