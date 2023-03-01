@@ -51,6 +51,7 @@ def non_stack_box(gene: str, feature: str, dataset: str, specimen: str, entity: 
 				)ori
 			WHERE Dataset LIKE '%{dataset}%'
 				AND Omics LIKE '%{feature}%'
+				AND Entity LIKE '%{entity}%'
 				AND Disease_condition NOT LIKE '%mean%'
 		"""
 		diseases = pd.read_sql_query(sql_disease, conn)
