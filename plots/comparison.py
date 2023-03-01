@@ -8,7 +8,7 @@ from matplotlib.figure import Figure
 import numpy as np
 import matplotlib.cm as cm
 from copy import copy
-from plots.select_molecole_entity_value import select_molecule_entity_value
+from .select_molecole_entity_value import select_molecule_entity_value
 from statannotations.Annotator import Annotator
 import matplotlib as mpl
 import itertools
