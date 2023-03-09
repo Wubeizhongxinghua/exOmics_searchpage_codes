@@ -4,7 +4,8 @@ import numpy as np
 import matplotlib.cm as cm
 import matplotlib as mpl
 from .select_molecole_entity_value import select_molecule_entity_value
-
+import seaborn as sns
+from textwrap import wrap
 
 def table_bar(gene: str, feature: str, dataset: str, disease: str, specimen: str, entity: str, conn):
     """
@@ -42,7 +43,7 @@ def table_bar(gene: str, feature: str, dataset: str, disease: str, specimen: str
         fig = Figure()
         ax = fig.subplots()
 
-        width_all = 0.7
+        width_all = 0.9
         width = width_all/y  # the width of the bars
         multiplier = 0
         cm.ScalarMappable(cmap=mpl.cm.cool)
@@ -57,6 +58,8 @@ def table_bar(gene: str, feature: str, dataset: str, disease: str, specimen: str
 
         ax.set_ylabel(f'{value.upper()}')
         ax.set_title(f'{value.upper()} of {gene.upper()} in dataset {dataset.upper()} in specimen {specimen.upper()} of disease {disease.upper()}')
-        ax.set_xticks(x + width_all/2, list(table.index),rotation=90)
+
+        labels = [ '\n'.join(wrap(l, 15)) for l in list(table.index)]
+        ax.set_xticks(x + width_all/2, labels)
         ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
         return fig, table.to_json()
