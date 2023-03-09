@@ -89,7 +89,7 @@ def stack_box(gene: str, feature: str, dataset: str, specimen: str, entity: str,
 			color_notrans = copy(color)
 			color_notrans[-1] = 1
 			elements.append(ax.boxplot(data,
-				notch=True,
+				notch=False,
 				patch_artist=True,
 				labels=labels,
 				boxprops={'facecolor':color,'edgecolor':color_notrans},

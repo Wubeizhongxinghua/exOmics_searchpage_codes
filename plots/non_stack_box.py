@@ -82,7 +82,7 @@ def non_stack_box(gene: str, feature: str, dataset: str, specimen: str, entity: 
 		ax = fig.subplots()
 
 		#Boxplot
-		plotfig = ax.boxplot(data,notch=True,patch_artist=True,labels=labels)
+		plotfig = ax.boxplot(data,notch=False,patch_artist=True,labels=labels)
 
 		ax.set_xlabel('Disease Conditions')
 		ax.set_ylabel(f'{value.upper()}')
