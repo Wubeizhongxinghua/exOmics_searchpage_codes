@@ -9,6 +9,9 @@ import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 import matplotlib as mpl
 from .select_molecole_entity_value import select_molecule_entity_value
+from copy import copy
+import matplotlib.cm as cm
+import seaborn as sns
 
 def non_stack_box(gene: str, feature: str, dataset: str, specimen: str, entity: str, conn) -> Figure:
 	"""
@@ -24,7 +27,7 @@ def non_stack_box(gene: str, feature: str, dataset: str, specimen: str, entity: 
 		# entity = 'gene'
 		# value = 'tpm'
 		molecule, value = select_molecule_entity_value(dataset, feature, specimen, entity, conn)
-
+		sns.set_theme()
 
 		#根据以上条件查询所有可能的疾病类型
 		sql_disease = f"""
@@ -76,21 +79,40 @@ def non_stack_box(gene: str, feature: str, dataset: str, specimen: str, entity: 
 		#将获得一个多行多列的表，每一行代表一个entity，每一列代表一个样本或一个疾病类型（当disease是mean时）。因此做barplot选择做dodged barplot (即grouped bat chart)。
 
 
+		#labels, data = diseases_data.keys(), diseases_data.values() #Drawing data
 
-		labels, data = diseases_data.keys(), diseases_data.values() #Drawing data
+		data = pd.DataFrame(pd.DataFrame.from_dict(diseases_data,orient='index').T.unstack())
+		data = data.reset_index().drop(labels='level_1',axis=1).rename(columns={'level_0':'Diseases',0:'Value'}).dropna()
 		fig = Figure()
 		ax = fig.subplots()
+		cmap = cm.get_cmap('viridis',len(labels))
+		colors = cmap(np.linspace(0, 1, len(labels)))
+		colors[:,-1] = 0.5
+		#color = colors[i,:]
+		color_notrans = copy(colors)
+		color_notrans[-1] = 1
 
 		#Boxplot
-		plotfig = ax.boxplot(data,notch=False,patch_artist=True,labels=labels)
+		plotfig = sns.boxplot(data=data,x='Diseases',y='Value',
+						#boxprops={'facecolor':colors,'edgecolor':color_notrans},
+						#flierprops={'marker':'.', 'markerfacecolor': colors, 'markeredgecolor': color_notrans},
+						#medianprops = {'color': color_notrans},
+						#capprops={'color':color_notrans},
+						#whiskerprops={'color':color_notrans}
+						ax=ax, palette='viridis'
+						)
+		plotfig = sns.stripplot(x='Diseases', y='Value', data=data, color="grey",ax=ax,alpha=0.7,size=2)
+		# for box,c,cno in zip(plotfig['boxes'], colors, color_notrans):
+		#     # 箱体内部填充颜色
+		#     box.set( facecolor = c, edgecolor=cno)
 
 		ax.set_xlabel('Disease Conditions')
 		ax.set_ylabel(f'{value.upper()}')
-
+		sns.set_style()
 		#Fill color
 		cmap = cm.ScalarMappable(cmap=mpl.cm.cool)
-		test_mean = [np.mean(x) for x in data]
-		for patch, color in zip(plotfig['boxes'], cmap.to_rgba(test_mean)):
-			patch.set_facecolor(color)
+		# test_mean = [np.mean(x) for x in data]
+		# for patch, color in zip(plotfig['boxes'], cmap.to_rgba(test_mean)):
+		#     patch.set_facecolor(color)
 		fig.tight_layout()
 		return fig

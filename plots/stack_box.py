@@ -8,7 +8,7 @@ import numpy as np
 import matplotlib.cm as cm
 from copy import copy
 from .select_molecole_entity_value import select_molecule_entity_value
-
+import seaborn as sns
 
 def stack_box(gene: str, feature: str, dataset: str, specimen: str, entity: str, conn) -> Figure:
 	"""
@@ -26,7 +26,7 @@ def stack_box(gene: str, feature: str, dataset: str, specimen: str, entity: str,
 	# value = 'count'
 	with conn:
 		molecule, value = select_molecule_entity_value(dataset, feature, specimen, entity, conn)
-
+		sns.set_theme()
 		#根据以上条件查询所有可能的疾病类型
 		sql_disease = f"""
 			SELECT ori.Disease_condition

@@ -77,6 +77,6 @@ def heat_map(gene: str, feature: str, dataset: str, specimen: str, entity: str, 
 		ax.set_xticks(range(len(xLabel)))
 		ax.set_xticklabels(xLabel,rotation=90)
 		fig.colorbar(im,label=value.upper())
-		ax.set_title(f"Heatmap of {feature.upper()} of {gene.upper()} in {specimen.upper()} of dataset {dataset.upper()}")
+		#ax.set_title(f"Heatmap of {feature.upper()} of {gene.upper()} in {specimen.upper()} of dataset {dataset.upper()}")
 		#fig.tight_layout()
 		return fig

@@ -22,7 +22,7 @@ def table_bar(gene: str, feature: str, dataset: str, disease: str, specimen: str
     # value = 'count'
     with conn:
         molecule, value = select_molecule_entity_value(dataset, feature, specimen, entity, conn)
-
+        sns.set_theme()
         #查询语句
         query_sql = f"""
             SELECT c.*
@@ -47,7 +47,6 @@ def table_bar(gene: str, feature: str, dataset: str, disease: str, specimen: str
         width = width_all/y  # the width of the bars
         multiplier = 0
         cm.ScalarMappable(cmap=mpl.cm.cool)
-
         for coli in range(table.shape[1]): #每一列
             attribute = table.columns[coli] #第i列的列名
             measurement = table.iloc[:,coli] #第i列的数据
