@@ -2,7 +2,8 @@ import pandas as pd
 from matplotlib.figure import Figure
 import matplotlib.pyplot as plt
 from .select_molecole_entity_value import select_molecule_entity_value
-
+import seaborn as sns
+import numpy as np
 
 def heat_map(gene: str, feature: str, dataset: str, specimen: str, entity: str, conn) -> Figure:
 	"""
@@ -59,24 +60,32 @@ def heat_map(gene: str, feature: str, dataset: str, specimen: str, entity: str, 
 				WHERE c.feature LIKE CONCAT('%',g.ensembl_gene_id,'%')
 					AND g.ensembl_gene_id LIKE '%{gene}%'
 			"""
-			temp = pd.read_sql_query(query_sql, conn).set_index('feature').astype('float').mean(axis=1)
+			temp = pd.read_sql_query(query_sql, conn).set_index('feature').replace({'NA':'nan'}).fillna(0).astype('float').mean(axis=1) #TODO 更好的na策略
 			temp = temp.to_frame()
 			temp.columns = [disease.upper()]
 			diseases_data = pd.concat([diseases_data,temp],axis=1)
 		diseases_data = diseases_data.T
+
+		x = np.arange(diseases_data.shape[1]) #列数向量
+		y = diseases_data.shape[0]
+
+		width_all = 0.9
 
 		#作图
 		fig = Figure()
 		ax = fig.subplots()
 		xLabel = diseases_data.columns.to_list()
 		yLabel = diseases_data.index.to_list()
+		# im = ax.imshow(diseases_data.values, cmap=plt.cm.viridis)
+		sns.heatmap(data=diseases_data.values,ax=ax,cmap=plt.get_cmap('viridis'),cbar=True,cbar_kws={'label': value.upper()})
+		ax.set_yticks([x+0.5 for x in list(range(len(yLabel)))],yLabel)
+		# ax.set_yticklabels(yLabel)
+		# ax.set_xticks(range(len(xLabel)))
+		# ax.set_xticklabels(xLabel,rotation=90,fontsize='xx-small')
+		labels = [ '\n'.join(wrap(l, 40)) for l in list(xLabel)]
+		ax.set_xticks(x + width_all/2, labels,rotation=90,fontsize='xx-small')
 
-		im = ax.imshow(diseases_data.values, cmap=plt.cm.cool)
-		ax.set_yticks(range(len(yLabel)))
-		ax.set_yticklabels(yLabel)
-		ax.set_xticks(range(len(xLabel)))
-		ax.set_xticklabels(xLabel,rotation=90)
-		fig.colorbar(im,label=value.upper())
+		# fig.colorbar(fig,label=value.upper())
 		#ax.set_title(f"Heatmap of {feature.upper()} of {gene.upper()} in {specimen.upper()} of dataset {dataset.upper()}")
-		#fig.tight_layout()
+		fig.tight_layout()
 		return fig

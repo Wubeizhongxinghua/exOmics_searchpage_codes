@@ -70,7 +70,7 @@ def non_stack_box(gene: str, feature: str, dataset: str, specimen: str, entity: 
 			"""
 			temp = pd.read_sql_query(query_sql, conn) #选择某个疾病类型下的某个基因的所有样本的值，应当是1*n的矩阵
 			try:
-				diseases_data[disease.upper()] = list(temp.iloc[0,1:].astype('float'))
+				diseases_data[disease.upper()] = list(temp.iloc[0,1:].replace({'NA':'nan'}).fillna(0).astype('float')) #TODO 更好的na策略
 			except IndexError:
 				diseases_data[disease.upper()] = np.zeros(temp.shape[1],dtype='float')
 

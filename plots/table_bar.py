@@ -33,7 +33,7 @@ def table_bar(gene: str, feature: str, dataset: str, disease: str, specimen: str
 
         #获得表格，可以直接在网页中展示
         table = pd.read_sql_query(query_sql, conn)
-        table.iloc[:,1:] = table.iloc[:,1:].astype('float')
+        table.iloc[:,1:] = table.iloc[:,1:].replace({'NA':'nan'}).fillna(0).astype('float') #TODO 更好的na策略
         table = table.set_index('feature') #feature列设为index
 
         #作图
@@ -58,7 +58,8 @@ def table_bar(gene: str, feature: str, dataset: str, disease: str, specimen: str
         ax.set_ylabel(f'{value.upper()}')
         ax.set_title(f'{value.upper()} of {gene.upper()} in dataset {dataset.upper()} in specimen {specimen.upper()} of disease {disease.upper()}')
 
-        labels = [ '\n'.join(wrap(l, 15)) for l in list(table.index)]
-        ax.set_xticks(x + width_all/2, labels)
+        labels = [ '\n'.join(wrap(l, 40)) for l in list(table.index)]
+        ax.set_xticks(x + width_all/2, labels,rotation=90,fontsize='xx-small')
         ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
+        fig.tight_layout()
         return fig, table.to_json()

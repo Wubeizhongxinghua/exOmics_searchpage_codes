@@ -71,7 +71,7 @@ def stack_box(gene: str, feature: str, dataset: str, specimen: str, entity: str,
 			for fentity in fentities:
 				if fentity not in diseases_data.keys():
 					diseases_data[fentity] = {}
-				diseases_data[fentity][disease.upper()] = list(temp[temp['feature']==fentity].iloc[0,1:].astype('float'))
+				diseases_data[fentity][disease.upper()] = list(temp[temp['feature']==fentity].iloc[0,1:].replace({'NA':'nan'}).fillna(0).astype('float')) #TODO 更好的策略
 
 		#作图
 		#将获得一个多行多列的表，每一行代表一个entity，每一列代表一个样本或一个疾病类型（当disease是mean时）。因此做barplot选择做dodged barplot (即grouped bat chart)。
@@ -103,7 +103,11 @@ def stack_box(gene: str, feature: str, dataset: str, specimen: str, entity: str,
 		colors_notrans[:,-1] = 1
 		ax.legend([element["boxes"][0] for element in elements],
 			[list(features)[idx] for idx in range(len(features))],
-			bbox_to_anchor=(1, 0.5),
-			loc='best'
+			bbox_to_anchor=(0,1.02,1,1),
+			loc='lower left',
+			mode='expand',
+			borderaxespad=0,
+			fontsize=5
 		)
+		fig.tight_layout()
 		return fig
