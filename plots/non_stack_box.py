@@ -85,12 +85,12 @@ def non_stack_box(gene: str, feature: str, dataset: str, specimen: str, entity: 
 		data = data.reset_index().drop(labels='level_1',axis=1).rename(columns={'level_0':'Diseases',0:'Value'}).dropna()
 		fig = Figure()
 		ax = fig.subplots()
-		cmap = cm.get_cmap('viridis',len(labels))
-		colors = cmap(np.linspace(0, 1, len(labels)))
-		colors[:,-1] = 0.5
-		#color = colors[i,:]
-		color_notrans = copy(colors)
-		color_notrans[-1] = 1
+		# cmap = cm.get_cmap('viridis',len(labels))
+		# colors = cmap(np.linspace(0, 1, len(labels)))
+		# colors[:,-1] = 0.5
+		# #color = colors[i,:]
+		# color_notrans = copy(colors)
+		# color_notrans[-1] = 1
 
 		#Boxplot
 		plotfig = sns.boxplot(data=data,x='Diseases',y='Value',

@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from .select_molecole_entity_value import select_molecule_entity_value
 import seaborn as sns
 import numpy as np
-
+from textwrap import wrap
 def heat_map(gene: str, feature: str, dataset: str, specimen: str, entity: str, conn) -> Figure:
 	"""
 	gene = 'ENSG00000000457' #基因主页所对应的基因 \\
